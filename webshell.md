@@ -1,6 +1,6 @@
-##PortSwigger - Webshell
+#PortSwigger - Webshell
 
-# Lab1
+## Lab1
 En este lab, se nos presenta un sistema de login donde podemos subir un archivo sin sanitizar. Subimos un archivo PHP como "pwned.php" y accedemos a la webshell con el siguiente enlace:
 
 https://0a81006804832510849c04de00e800b0.web-security-academy.net/files/avatars/pwned.php?cmd=whoami
